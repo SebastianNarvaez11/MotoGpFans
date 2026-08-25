@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -60,6 +62,13 @@ export default async function LocaleLayout({
             {children}
             <SiteFooter />
           </main>
+
+          {/* Analítica de Vercel: sin cookies y sin identificar a nadie, así
+              que no hace falta pedir consentimiento. Los scripts se sirven
+              desde nuestro propio dominio (`/_vercel/...`), que es lo que
+              permite que la CSP los admita con `'self'`. */}
+          <Analytics />
+          <SpeedInsights />
         </NextIntlClientProvider>
       </body>
     </html>
