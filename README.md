@@ -57,9 +57,17 @@ API de MotoGP  →  Validación (Zod)  →  Traductores  →  PostgreSQL
 visitante ocurre solo al renderizar, con `Intl.DateTimeFormat`. Así "hora de
 Colombia" no es un caso especial: es una zona más entre cientos.
 
-La zona elegida viaja en una **cookie**, no en `localStorage`, para que el
-servidor ya envíe el HTML con las horas correctas. Sin ese detalle, la primera
-pintura mostraría una hora equivocada y saltaría al corregirse.
+La zona se resuelve **en el servidor**, por este orden:
+
+1. **La cookie**, si la persona eligió una zona a mano.
+2. **La cabecera `x-vercel-ip-timezone`**, que Vercel deduce de la IP. Es lo que
+   permite acertar ya en la primera visita: el navegador conoce su zona, pero no
+   la envía en la primera petición.
+3. **Madrid**, la del calendario oficial, como último recurso.
+
+Va en cookie y no en `localStorage` —y la detección es de servidor y no de
+navegador— para que el HTML salga ya con las horas correctas. Convertirlas
+después de cargar obligaría a repintarlas a la vista del usuario.
 
 ### Cuándo se actualizan los datos
 
