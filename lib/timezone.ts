@@ -1,38 +1,54 @@
 import "server-only";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { isValidTimeZone, normalizeTimeZone } from "./normalize";
 import { TIMEZONE_COOKIE } from "./timezone-cookie";
 
 export { TIMEZONE_COOKIE };
 
 /**
- * Zona por defecto cuando el visitante aún no ha elegido ninguna.
- * Se usa Madrid porque es la del calendario oficial: así los horarios que se
- * ven de entrada coinciden con los que publica MotoGP.
+ * Cabecera que añade Vercel con la zona horaria deducida de la IP del
+ * visitante, en formato IANA ("America/Bogota").
+ */
+const GEO_TIMEZONE_HEADER = "x-vercel-ip-timezone";
+
+/**
+ * Último recurso cuando no hay cookie ni geolocalización.
+ * Se usa Madrid porque es la zona del calendario oficial: los horarios que se
+ * ven coinciden entonces con los que publica MotoGP.
  */
 export const FALLBACK_TIMEZONE = "Europe/Madrid";
 
 /**
- * Zona horaria activa para esta petición.
+ * Zona horaria activa para esta petición, por orden de preferencia:
  *
- * Se lee de una **cookie**, no de `localStorage`, precisamente para que el
- * servidor ya renderice las horas correctas: si dependiera del navegador,
- * la primera pintura mostraría una hora equivocada y saltaría al corregirse.
+ *  1. **La cookie** — lo que la persona eligió a mano manda siempre.
+ *  2. **La geolocalización de Vercel** — acierta ya en la primera visita, antes
+ *     de que el navegador ejecute nada. Sin esto, quien entrara por primera vez
+ *     vería los horarios en hora de Madrid aunque estuviera en Bogotá.
+ *  3. **Madrid** — en local, en los tests o si la cabecera no llega.
  *
- * El valor se valida siempre: una cookie la puede manipular cualquiera, y una
- * zona inventada haría reventar el formateo de toda la página.
+ * Todos los valores se validan: una cookie la manipula cualquiera, y una zona
+ * inventada haría fallar el formateo de la página entera.
  */
 export async function getTimeZone(): Promise<string> {
   const store = await cookies();
-  const raw = store.get(TIMEZONE_COOKIE)?.value;
+  const fromCookie = store.get(TIMEZONE_COOKIE)?.value;
+  const chosen = pickValid(fromCookie);
+  if (chosen) return chosen;
 
-  if (!raw) return FALLBACK_TIMEZONE;
+  const requestHeaders = await headers();
+  const fromGeo = pickValid(requestHeaders.get(GEO_TIMEZONE_HEADER));
+  if (fromGeo) return fromGeo;
 
-  // Se comprueba el valor crudo, no el normalizado: `normalizeTimeZone`
-  // convierte lo desconocido en "UTC", que es una zona válida, así que
-  // normalizar primero convertiría una cookie manipulada en horarios de UTC en
-  // lugar de devolver al usuario a la zona por defecto.
-  if (!isValidTimeZone(raw.trim())) return FALLBACK_TIMEZONE;
+  return FALLBACK_TIMEZONE;
+}
 
-  return normalizeTimeZone(raw);
+/** Devuelve la zona canónica si el valor es una zona real; si no, null. */
+function pickValid(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  // Se comprueba el valor crudo: `normalizeTimeZone` convierte lo desconocido
+  // en "UTC", que es válido, y eso enmascararía una entrada inventada.
+  if (!isValidTimeZone(trimmed)) return null;
+  return normalizeTimeZone(trimmed);
 }
