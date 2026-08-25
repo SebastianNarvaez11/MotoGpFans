@@ -99,6 +99,24 @@
   font-variant-numeric: tabular-nums;
 }
 
+/**
+ * Safari en iOS amplía la página al enfocar un campo cuyo texto mida menos de
+ * 16px, y salir de ese zoom obliga a pellizcar la pantalla. La solución
+ * accesible es respetar ese mínimo, no desactivar el zoom con
+ * `user-scalable=no`: eso impediría ampliar a quien lo necesita para leer.
+ *
+ * Es una red de seguridad además del tamaño que fije cada componente: los
+ * `:not()` dan la especificidad necesaria para ganar a una clase de Tailwind,
+ * de modo que un campo nuevo no puede reintroducir el problema por descuido.
+ */
+@media (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select:not([multiple]),
+  textarea:not([hidden]) {
+    font-size: 16px;
+  }
+}
+
 html {
   color-scheme: dark;
 }

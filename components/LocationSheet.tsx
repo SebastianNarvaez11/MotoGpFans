@@ -202,7 +202,10 @@ export function LocationSheet({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t("search")}
-                className="text-paper w-full bg-transparent text-sm outline-none placeholder:text-white/45"
+                // `text-base` (16px) y no `text-sm`: Safari en iOS hace zoom
+                // automático al enfocar un campo de menos de 16px, y salir de
+                // ese zoom obliga al usuario a pellizcar la pantalla.
+                className="text-paper w-full bg-transparent text-base outline-none placeholder:text-white/45"
               />
             </label>
 
