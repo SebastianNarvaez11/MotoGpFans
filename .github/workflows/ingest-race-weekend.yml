@@ -1,0 +1,66 @@
+name: Ingesta de fin de semana de carrera
+
+# Por qué esta cadencia, con los datos de la temporada 2026 delante:
+#
+#   · Lunes  → 0 sesiones en toda la temporada. Ejecutar ahí es desperdicio puro.
+#   · Jueves y viernes → solo entrenamientos: no mueven el campeonato.
+#   · Sábado (Sprint) y domingo (Carrera) → las dos sesiones que sí reparten
+#     puntos, y lo que un aficionado quiere ver recién terminada la carrera.
+#
+# Tampoco se estrecha la franja horaria: las carreras van de 0h a 20h UTC
+# porque el calendario es global (Japón y Australia de madrugada, América por
+# la tarde). Acotar horas dejaría medio calendario fuera.
+#
+# Además, el propio endpoint comprueba en nuestra base de datos si terminó
+# alguna sesión puntuable desde la última ingesta. En los ~30 fines de semana
+# del año sin Gran Premio, cada ejecución termina en milisegundos y no llama ni
+# una vez a la API de MotoGP.
+
+on:
+  schedule:
+    # Cada hora, sábados y domingos. 48 ejecuciones semanales.
+    - cron: "15 * * * 6,0"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Reingerir aunque no haya sesiones nuevas"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    name: Refrescar clasificaciones y resultados
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Lanzar ingesta ligera
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          set -euo pipefail
+
+          URL="${SITE_URL%/}/api/ingest?preset=live"
+          if [ "${FORCE:-false}" = "true" ]; then URL="${URL}&force=true"; fi
+
+          echo "POST ${URL}"
+          CODE=$(curl -sS -X POST "$URL" \
+            -H "Authorization: Bearer ${INGEST_SECRET}" \
+            -o response.json -w "%{http_code}" \
+            --max-time 300 --retry 2 --retry-delay 20)
+
+          echo "HTTP ${CODE}"
+          cat response.json | head -c 4000
+          echo ""
+
+          if [ "$CODE" != "200" ]; then
+            echo "::error::La ingesta no terminó correctamente (HTTP ${CODE})"
+            exit 1
+          fi

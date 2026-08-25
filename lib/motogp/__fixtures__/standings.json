@@ -1,0 +1,249 @@
+{
+  "classification": [
+    {
+      "id": "1be4da72-1662-464e-8ad4-b3b309458633",
+      "position": 1,
+      "rider": {
+        "id": "5cbd7eb6-ccfc-4b9f-aad1-ede25d394f7b",
+        "full_name": "Jorge Martin",
+        "country": {
+          "iso": "ES",
+          "name": "Spain",
+          "region_iso": ""
+        },
+        "legacy_id": 8146,
+        "riders_id": "5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc",
+        "number": 89,
+        "riders_api_uuid": "5b9af34e-da94-4ca2-9c4c-6be0fc8b1bbc"
+      },
+      "team": {
+        "id": "b378e3e0-a700-478a-a6d5-3588c3f01244",
+        "name": "Aprilia Racing",
+        "legacy_id": 1,
+        "season": {
+          "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+          "year": 2026,
+          "current": true
+        }
+      },
+      "constructor": {
+        "id": "10d5e2bc-4b0b-4875-b936-3962fbb1b877",
+        "name": "Aprilia",
+        "legacy_id": 7
+      },
+      "session": "RAC",
+      "points": 240,
+      "race_wins": 1,
+      "podiums": 6,
+      "last_positions": {
+        "GBR": 2,
+        "GER": 5,
+        "NED": 3
+      },
+      "sprint_wins": 3,
+      "sprint_podiums": 5,
+      "sprint_last_positions": {
+        "GBR": 1,
+        "GER": 6,
+        "NED": 5
+      },
+      "position_change": 0
+    },
+    {
+      "id": "4b93e145-b680-4516-b033-896035adf434",
+      "position": 2,
+      "rider": {
+        "id": "ab06dbae-7d6e-47c3-b63f-b7ac6b7d3bcd",
+        "full_name": "Marco Bezzecchi",
+        "country": {
+          "iso": "IT",
+          "name": "Italy",
+          "region_iso": ""
+        },
+        "legacy_id": 8688,
+        "riders_id": "e622ec5b-5ccf-457c-a67f-ec028f0ddf6e",
+        "number": 72,
+        "riders_api_uuid": "e622ec5b-5ccf-457c-a67f-ec028f0ddf6e"
+      },
+      "team": {
+        "id": "6967d790-8342-4649-a687-7cf5b0d038dd",
+        "name": "Aprilia Racing",
+        "legacy_id": 20,
+        "season": {
+          "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+          "year": 2026,
+          "current": true
+        }
+      },
+      "constructor": {
+        "id": "10d5e2bc-4b0b-4875-b936-3962fbb1b877",
+        "name": "Aprilia",
+        "legacy_id": 7
+      },
+      "session": "RAC",
+      "points": 209,
+      "race_wins": 4,
+      "podiums": 7,
+      "last_positions": {
+        "GBR": 3,
+        "GER": null,
+        "NED": null
+      },
+      "sprint_wins": 0,
+      "sprint_podiums": 3,
+      "sprint_last_positions": {
+        "GBR": 3,
+        "GER": null,
+        "NED": 4
+      },
+      "position_change": 1
+    },
+    {
+      "id": "ed49e82a-b126-4495-9b17-65a426d4c75d",
+      "position": 3,
+      "rider": {
+        "id": "eb47c439-e136-40ff-9534-5c612853f529",
+        "full_name": "Ai Ogura",
+        "country": {
+          "iso": "JP",
+          "name": "Japan",
+          "region_iso": ""
+        },
+        "legacy_id": 8680,
+        "riders_id": "244b6f51-ac33-40ee-876d-9401dc9d1346",
+        "number": 79,
+        "riders_api_uuid": "244b6f51-ac33-40ee-876d-9401dc9d1346"
+      },
+      "team": {
+        "id": "f5bba6a8-eec7-4cea-8c7a-8206a33dcb37",
+        "name": "SuperFile Trackhouse MotoGP Team",
+        "legacy_id": 22,
+        "season": {
+          "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+          "year": 2026,
+          "current": true
+        }
+      },
+      "constructor": {
+        "id": "10d5e2bc-4b0b-4875-b936-3962fbb1b877",
+        "name": "Aprilia",
+        "legacy_id": 7
+      },
+      "session": "RAC",
+      "points": 203,
+      "race_wins": 1,
+      "podiums": 4,
+      "last_positions": {
+        "GBR": null,
+        "GER": 2,
+        "NED": 1
+      },
+      "sprint_wins": 0,
+      "sprint_podiums": 3,
+      "sprint_last_positions": {
+        "GBR": 2,
+        "GER": 4,
+        "NED": 2
+      },
+      "position_change": -1
+    },
+    {
+      "id": "e0e74231-fc3c-44cd-8d35-ac8104518d16",
+      "position": 4,
+      "rider": {
+        "id": "f55b433d-38b8-4d1d-bb3a-a709c82a0260",
+        "full_name": "Marc Marquez",
+        "country": {
+          "iso": "ES",
+          "name": "Spain",
+          "region_iso": ""
+        },
+        "legacy_id": 7444,
+        "riders_id": "23e50438-a657-4fb0-a190-3262b5472f29",
+        "number": 93,
+        "riders_api_uuid": "23e50438-a657-4fb0-a190-3262b5472f29"
+      },
+      "team": {
+        "id": "616925f4-0e51-477e-ae04-ad0447d70aa7",
+        "name": "Ducati Lenovo Team",
+        "legacy_id": 24,
+        "season": {
+          "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+          "year": 2026,
+          "current": true
+        }
+      },
+      "constructor": {
+        "id": "b9d93efb-3cd0-4681-9de4-c412a866d568",
+        "name": "Ducati",
+        "legacy_id": 110
+      },
+      "session": "RAC",
+      "points": 200,
+      "race_wins": 3,
+      "podiums": 3,
+      "last_positions": {
+        "GBR": 7,
+        "GER": 1,
+        "NED": 7
+      },
+      "sprint_wins": 4,
+      "sprint_podiums": 6,
+      "sprint_last_positions": {
+        "GBR": 9,
+        "GER": 1,
+        "NED": 6
+      },
+      "position_change": 0
+    },
+    {
+      "id": "88c9b2b7-75d9-4b5e-8c7a-172f3792ae10",
+      "position": 5,
+      "rider": {
+        "id": "6c33de41-f014-4f17-8dc9-e6f36e61026a",
+        "full_name": "Fabio Di Giannantonio",
+        "country": {
+          "iso": "IT",
+          "name": "Italy",
+          "region_iso": ""
+        },
+        "legacy_id": 8539,
+        "riders_id": "525b1551-f10b-4cfd-9b43-59af6fca654b",
+        "number": 49,
+        "riders_api_uuid": "525b1551-f10b-4cfd-9b43-59af6fca654b"
+      },
+      "team": {
+        "id": "ee92fb0f-6420-4838-9b80-6d8b14815cd0",
+        "name": "Pertamina Enduro VR46 Racing Team",
+        "legacy_id": 17,
+        "season": {
+          "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+          "year": 2026,
+          "current": true
+        }
+      },
+      "constructor": {
+        "id": "b9d93efb-3cd0-4681-9de4-c412a866d568",
+        "name": "Ducati",
+        "legacy_id": 110
+      },
+      "session": "RAC",
+      "points": 199,
+      "race_wins": 1,
+      "podiums": 3,
+      "last_positions": {
+        "GBR": 6,
+        "GER": null,
+        "NED": 4
+      },
+      "sprint_wins": 0,
+      "sprint_podiums": 5,
+      "sprint_last_positions": {
+        "GBR": 5,
+        "GER": 3,
+        "NED": 3
+      },
+      "position_change": 0
+    }
+  ]
+}

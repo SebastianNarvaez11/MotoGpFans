@@ -1,0 +1,200 @@
+[
+  {
+    "country": {
+      "iso": "TH",
+      "name": "Thailand",
+      "region_iso": ""
+    },
+    "event_files": {
+      "circuit_information": {
+        "url": "https://resources.motogp.com/files/results/2026/THA/CircuitInformation.pdf",
+        "menu_position": 1
+      },
+      "podiums": {
+        "url": "https://resources.motogp.com/files/results/2026/THA/Podiums.pdf",
+        "menu_position": 2
+      },
+      "pole_positions": {
+        "url": "https://resources.motogp.com/files/results/2026/THA/PolePositions.pdf",
+        "menu_position": 2
+      },
+      "nations_statistics": {
+        "url": "https://resources.motogp.com/files/results/2026/THA/table2.pdf",
+        "menu_position": 2
+      },
+      "riders_all_time": {
+        "url": "https://resources.motogp.com/files/results/2026/THA/table4.pdf",
+        "menu_position": 2
+      }
+    },
+    "circuit": {
+      "id": "a8bd93f8-8e7e-4669-ae1c-1f3f5156b4e7",
+      "name": "Chang International Circuit",
+      "legacy_id": 106,
+      "place": "Buriram",
+      "nation": "THA",
+      "events_id": null
+    },
+    "test": false,
+    "sponsored_name": "PT Grand Prix of Thailand",
+    "date_end": "2026-03-01",
+    "toad_api_uuid": "364a0bd9-d3c2-4ab3-a4cd-211ff469953e",
+    "date_start": "2026-02-27",
+    "additional_name": "THAILAND",
+    "name": "GRAND PRIX OF THAILAND",
+    "legacy_id": [
+      {
+        "categoryId": 3,
+        "eventId": 1
+      },
+      {
+        "categoryId": 2,
+        "eventId": 1
+      },
+      {
+        "categoryId": 1,
+        "eventId": 1
+      }
+    ],
+    "season": {
+      "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+      "year": 2026,
+      "current": true
+    },
+    "short_name": "THA",
+    "id": "f3fd8ba7-2966-46bd-8687-b92047f5e733",
+    "status": "FINISHED"
+  },
+  {
+    "country": {
+      "iso": "BR",
+      "name": "Brazil",
+      "region_iso": ""
+    },
+    "event_files": {
+      "circuit_information": {
+        "url": "https://resources.motogp.com/files/results/2026/BRA/CircuitInformation.pdf",
+        "menu_position": 1
+      },
+      "podiums": {
+        "url": "https://resources.motogp.com/files/results/2026/BRA/Podiums.pdf",
+        "menu_position": 2
+      },
+      "pole_positions": {
+        "url": "https://resources.motogp.com/files/results/2026/BRA/PolePositions.pdf",
+        "menu_position": 2
+      },
+      "nations_statistics": {
+        "url": "https://resources.motogp.com/files/results/2026/BRA/table2.pdf",
+        "menu_position": 2
+      },
+      "riders_all_time": {
+        "url": "https://resources.motogp.com/files/results/2026/BRA/table4.pdf",
+        "menu_position": 2
+      }
+    },
+    "circuit": {
+      "id": "dc7c629b-f6e2-410e-860a-1ca0f28beb8f",
+      "name": "Autódromo Internacional de Goiânia - Ayrton Senna",
+      "legacy_id": 39,
+      "place": "Goiania",
+      "nation": "BRA",
+      "events_id": null
+    },
+    "test": false,
+    "sponsored_name": "Estrella Galicia 0,0 Grand Prix of Brazil",
+    "date_end": "2026-03-22",
+    "toad_api_uuid": "11588b5a-f76c-4c8e-ae06-acba82ff1303",
+    "date_start": "2026-03-20",
+    "additional_name": "BRAZIL",
+    "name": "GRAND PRIX OF BRAZIL",
+    "legacy_id": [
+      {
+        "categoryId": 3,
+        "eventId": 2
+      },
+      {
+        "categoryId": 2,
+        "eventId": 2
+      },
+      {
+        "categoryId": 1,
+        "eventId": 2
+      }
+    ],
+    "season": {
+      "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+      "year": 2026,
+      "current": true
+    },
+    "short_name": "BRA",
+    "id": "738a8b22-f744-4c75-847b-a2565dce17de",
+    "status": "FINISHED"
+  },
+  {
+    "country": {
+      "iso": "US",
+      "name": "United States of America",
+      "region_iso": ""
+    },
+    "event_files": {
+      "circuit_information": {
+        "url": "https://resources.motogp.com/files/results/2026/USA/CircuitInformation.pdf",
+        "menu_position": 1
+      },
+      "podiums": {
+        "url": "https://resources.motogp.com/files/results/2026/USA/Podiums.pdf",
+        "menu_position": 2
+      },
+      "pole_positions": {
+        "url": "https://resources.motogp.com/files/results/2026/USA/PolePositions.pdf",
+        "menu_position": 2
+      },
+      "nations_statistics": {
+        "url": "https://resources.motogp.com/files/results/2026/USA/table2.pdf",
+        "menu_position": 2
+      },
+      "riders_all_time": {
+        "url": "https://resources.motogp.com/files/results/2026/USA/table4.pdf",
+        "menu_position": 2
+      }
+    },
+    "circuit": {
+      "id": "5b97d826-e527-43e9-b696-09f61cf4559c",
+      "name": "Circuit Of The Americas",
+      "legacy_id": 101,
+      "place": "Austin",
+      "nation": "USA",
+      "events_id": null
+    },
+    "test": false,
+    "sponsored_name": "Red Bull Grand Prix of The United States",
+    "date_end": "2026-03-29",
+    "toad_api_uuid": "8c83648e-8ec9-40f1-9ba0-b0f19883e7d7",
+    "date_start": "2026-03-27",
+    "additional_name": "USA",
+    "name": "GRAND PRIX OF THE UNITED STATES",
+    "legacy_id": [
+      {
+        "categoryId": 3,
+        "eventId": 3
+      },
+      {
+        "categoryId": 2,
+        "eventId": 3
+      },
+      {
+        "categoryId": 1,
+        "eventId": 3
+      }
+    ],
+    "season": {
+      "id": "e88b4e43-2209-47aa-8e83-0e0b1cedde6e",
+      "year": 2026,
+      "current": true
+    },
+    "short_name": "USA",
+    "id": "782c929d-faaf-44e2-9d6f-0fde033855be",
+    "status": "FINISHED"
+  }
+]

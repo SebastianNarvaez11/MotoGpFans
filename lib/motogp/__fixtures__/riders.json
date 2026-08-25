@@ -1,0 +1,377 @@
+[
+  {
+    "country": {
+      "iso": "ES",
+      "name": "Spain",
+      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+    },
+    "birth_city": "Burriana",
+    "birth_date": "2003-03-22",
+    "start_year": 2019,
+    "years_old": 23,
+    "published": true,
+    "retired_year": null,
+    "current_career_step": {
+      "id": "88e02389-5e73-49c2-9afc-88ae48a67bdc",
+      "season": 2026,
+      "number": 3,
+      "sponsored_team": "ITALJET Gresini Moto2",
+      "team": {
+        "id": "5119ab4e-9d4c-4ecb-b18a-d377cf518506",
+        "name": "ITALJET Gresini Moto2",
+        "legacy_id": 208,
+        "type": "Official",
+        "color": "#9baee4",
+        "text_color": "#383838",
+        "background_picture": null,
+        "picture": "https://photos.motogp.com/teams/5/1/5119ab4e-9d4c-4ecb-b18a-d377cf518506/main-picture.png",
+        "constructor": {
+          "id": "791160c2-6d2f-47ad-8d87-29e4f729073a",
+          "name": "Kalex",
+          "legacy_id": 447
+        },
+        "category": {
+          "id": "ea854a67-73a4-4a28-ac77-d67b3b2a530a",
+          "name": "Moto2",
+          "legacy_id": 2
+        }
+      },
+      "category": {
+        "id": "ea854a67-73a4-4a28-ac77-d67b3b2a530a",
+        "name": "Moto2",
+        "legacy_id": 2
+      },
+      "in_grid": true,
+      "short_nickname": "SG03",
+      "current": true,
+      "pictures": {
+        "profile": {
+          "main": "https://photos.motogp.com/riders/6/2/6251aee5-6e36-455c-8b43-e6fd1753fd8d/2026/profile/main-209324.png",
+          "secondary": null
+        },
+        "bike": {
+          "main": null,
+          "secondary": null
+        },
+        "helmet": {
+          "main": null,
+          "secondary": null
+        },
+        "number": null,
+        "portrait": null
+      },
+      "type": "Official"
+    },
+    "surname": "Garcia",
+    "name": "Sergio",
+    "nickname": null,
+    "legacy_id": 9958,
+    "retired": false,
+    "id": "6251aee5-6e36-455c-8b43-e6fd1753fd8d",
+    "famous_attributes": {
+      "famous": null,
+      "picture": "",
+      "order": null
+    }
+  },
+  {
+    "country": {
+      "iso": "ES",
+      "name": "Spain",
+      "flag": "https://photos.motogp.com/countries/flags/iso2/ES.svg"
+    },
+    "birth_city": "Valencia",
+    "birth_date": "2004-08-04",
+    "start_year": 2022,
+    "years_old": 22,
+    "published": true,
+    "retired_year": null,
+    "current_career_step": {
+      "id": "542f004e-2d8e-42f8-bdb7-bd0e030d95e7",
+      "season": 2026,
+      "number": 4,
+      "sponsored_team": "QJMOTOR - Biolec - MSI",
+      "team": {
+        "id": "e1df9a44-e0f2-4a53-8248-0871270fc60a",
+        "name": "QJ MOTOR - GALFER - MSI",
+        "legacy_id": 217,
+        "type": "Official",
+        "color": "#d80c24",
+        "text_color": "#ffffff",
+        "background_picture": null,
+        "picture": "https://photos.motogp.com/teams/e/1/e1df9a44-e0f2-4a53-8248-0871270fc60a/main-picture.png",
+        "constructor": {
+          "id": "791160c2-6d2f-47ad-8d87-29e4f729073a",
+          "name": "Kalex",
+          "legacy_id": 447
+        },
+        "category": {
+          "id": "ea854a67-73a4-4a28-ac77-d67b3b2a530a",
+          "name": "Moto2",
+          "legacy_id": 2
+        }
+      },
+      "category": {
+        "id": "ea854a67-73a4-4a28-ac77-d67b3b2a530a",
+        "name": "Moto2",
+        "legacy_id": 2
+      },
+      "in_grid": true,
+      "short_nickname": "IO4",
+      "current": true,
+      "pictures": {
+        "profile": {
+          "main": "https://photos.motogp.com/riders/6/b/6b517083-20d8-40da-9d92-aeb63cdee89d/2026/profile/main-254322.png",
+          "secondary": null
+        },
+        "bike": {
+          "main": null,
+          "secondary": null
+        },
+        "helmet": {
+          "main": null,
+          "secondary": null
+        },
+        "number": null,
+        "portrait": null
+      },
+      "type": "Official"
+    },
+    "surname": "Ortola",
+    "name": "Ivan",
+    "nickname": null,
+    "legacy_id": 10224,
+    "retired": false,
+    "id": "6b517083-20d8-40da-9d92-aeb63cdee89d",
+    "famous_attributes": {
+      "famous": null,
+      "picture": "",
+      "order": null
+    }
+  },
+  {
+    "country": {
+      "iso": "FR",
+      "name": "France",
+      "flag": "https://photos.motogp.com/countries/flags/iso2/FR.svg"
+    },
+    "birth_city": "Cannes",
+    "birth_date": "1990-07-16",
+    "start_year": 2009,
+    "years_old": 36,
+    "published": true,
+    "retired_year": null,
+    "current_career_step": {
+      "id": "1b7fb47d-6915-441b-baa3-8f5dc4dbfa64",
+      "season": 2026,
+      "number": 5,
+      "sponsored_team": "CASTROL Honda LCR",
+      "team": {
+        "id": "77a0174a-c84d-4955-a722-b39e4d8e4ce5",
+        "name": "Honda LCR",
+        "legacy_id": 17,
+        "type": "Official",
+        "color": "#fafafa",
+        "text_color": "#383838",
+        "background_picture": "https://photos.motogp.com/teams/7/7/77a0174a-c84d-4955-a722-b39e4d8e4ce5/teamname-bg.png",
+        "picture": "https://photos.motogp.com/teams/7/7/77a0174a-c84d-4955-a722-b39e4d8e4ce5/main-picture.png",
+        "constructor": {
+          "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
+          "name": "Honda",
+          "legacy_id": 1
+        },
+        "category": {
+          "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+          "name": "MotoGP",
+          "legacy_id": 3
+        }
+      },
+      "category": {
+        "id": "737ab122-76e1-4081-bedb-334caaa18c70",
+        "name": "MotoGP",
+        "legacy_id": 3
+      },
+      "in_grid": true,
+      "short_nickname": "JZ5",
+      "current": true,
+      "pictures": {
+        "profile": {
+          "main": "https://photos.motogp.com/riders/4/a/4a439bde-305a-4995-b3e7-783fa99f784a/2026/profile/main-662501.png",
+          "secondary": null
+        },
+        "bike": {
+          "main": null,
+          "secondary": null
+        },
+        "helmet": {
+          "main": null,
+          "secondary": null
+        },
+        "number": "https://photos.motogp.com/riders/0/b/0b1f5c74-5cf4-48e9-a78d-f5d1bee34f2b/number/5.png",
+        "portrait": null
+      },
+      "type": "Official"
+    },
+    "surname": "Zarco",
+    "name": "Johann",
+    "nickname": "JZ",
+    "legacy_id": 7236,
+    "retired": false,
+    "id": "4a439bde-305a-4995-b3e7-783fa99f784a",
+    "famous_attributes": {
+      "famous": null,
+      "picture": "",
+      "order": null
+    }
+  },
+  {
+    "country": {
+      "iso": "AT",
+      "name": "Austria",
+      "flag": "https://photos.motogp.com/countries/flags/iso2/AT.svg"
+    },
+    "birth_city": "Linz",
+    "birth_date": "2004-08-13",
+    "start_year": 2026,
+    "years_old": 22,
+    "published": true,
+    "retired_year": null,
+    "current_career_step": {
+      "id": "25f9d657-20bc-4382-b9a5-bb6edba1adfd",
+      "season": 2026,
+      "number": 5,
+      "sponsored_team": "SIC58 Squadra Corse",
+      "team": {
+        "id": "5a444866-8ea4-42fa-bcf7-8c2d0d07a238",
+        "name": "SIC58 Squadra Corse",
+        "legacy_id": 104,
+        "type": "Official",
+        "color": "#e42327",
+        "text_color": "#ffffff",
+        "background_picture": null,
+        "picture": "https://photos.motogp.com/teams/5/a/5a444866-8ea4-42fa-bcf7-8c2d0d07a238/main-picture.png",
+        "constructor": {
+          "id": "8e21365c-a465-476a-a66b-5fda45058c2e",
+          "name": "Honda",
+          "legacy_id": 1
+        },
+        "category": {
+          "id": "1ab203aa-e292-4842-8bed-971911357af1",
+          "name": "Moto3",
+          "legacy_id": 1
+        }
+      },
+      "category": {
+        "id": "1ab203aa-e292-4842-8bed-971911357af1",
+        "name": "Moto3",
+        "legacy_id": 1
+      },
+      "in_grid": true,
+      "short_nickname": "LR5",
+      "current": true,
+      "pictures": {
+        "profile": {
+          "main": "https://photos.motogp.com/riders/8/a/8aef18e2-3cb9-4321-ba88-2eeac2b7a7f3/2026/profile/main-903882.png",
+          "secondary": null
+        },
+        "bike": {
+          "main": null,
+          "secondary": null
+        },
+        "helmet": {
+          "main": null,
+          "secondary": null
+        },
+        "number": null,
+        "portrait": null
+      },
+      "type": "Official"
+    },
+    "surname": "Rammerstorfer",
+    "name": "Leo",
+    "nickname": null,
+    "legacy_id": 10291,
+    "retired": false,
+    "id": "8aef18e2-3cb9-4321-ba88-2eeac2b7a7f3",
+    "famous_attributes": {
+      "famous": null,
+      "picture": "",
+      "order": null
+    }
+  },
+  {
+    "country": {
+      "iso": "JP",
+      "name": "Japan",
+      "flag": "https://photos.motogp.com/countries/flags/iso2/JP.svg"
+    },
+    "birth_city": "Yotsukaido",
+    "birth_date": "2001-11-06",
+    "start_year": 2019,
+    "years_old": 24,
+    "published": true,
+    "retired_year": null,
+    "current_career_step": {
+      "id": "68accb6b-5d0a-4d71-b526-8ca4506f1e18",
+      "season": 2026,
+      "number": 6,
+      "sponsored_team": "AEON Credit - MT Helmets - MSI",
+      "team": {
+        "id": "c8d2f693-73de-4c4b-bb92-6adbd8be070d",
+        "name": "AEON Credit - MT Helmets - MSI",
+        "legacy_id": 101,
+        "type": "Official",
+        "color": "#ff4133",
+        "text_color": "#ffffff",
+        "background_picture": null,
+        "picture": "https://photos.motogp.com/teams/c/8/c8d2f693-73de-4c4b-bb92-6adbd8be070d/main-picture.png",
+        "constructor": {
+          "id": "5ecd8db7-d87b-4b3e-87b6-1f72ee457ede",
+          "name": "KTM",
+          "legacy_id": 298
+        },
+        "category": {
+          "id": "1ab203aa-e292-4842-8bed-971911357af1",
+          "name": "Moto3",
+          "legacy_id": 1
+        }
+      },
+      "category": {
+        "id": "1ab203aa-e292-4842-8bed-971911357af1",
+        "name": "Moto3",
+        "legacy_id": 1
+      },
+      "in_grid": true,
+      "short_nickname": "RY6",
+      "current": true,
+      "pictures": {
+        "profile": {
+          "main": "https://photos.motogp.com/riders/b/2/b2570616-5431-4eb3-be49-d79fd4ff86e2/2026/profile/main-348690.png",
+          "secondary": null
+        },
+        "bike": {
+          "main": null,
+          "secondary": null
+        },
+        "helmet": {
+          "main": null,
+          "secondary": null
+        },
+        "number": null,
+        "portrait": null
+      },
+      "type": "Official"
+    },
+    "surname": "Yamanaka",
+    "name": "Ryusei",
+    "nickname": null,
+    "legacy_id": 8681,
+    "retired": false,
+    "id": "b2570616-5431-4eb3-be49-d79fd4ff86e2",
+    "famous_attributes": {
+      "famous": null,
+      "picture": "",
+      "order": null
+    }
+  }
+]

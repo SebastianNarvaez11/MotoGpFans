@@ -1,0 +1,51 @@
+name: Ingesta diaria
+
+on:
+  schedule:
+    # 04:30 UTC — de madrugada en Europa y América, lejos de cualquier sesión.
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+    inputs:
+      year:
+        description: "Temporada a ingerir (por defecto, la actual)"
+        required: false
+        type: string
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    name: Sincronizar calendario, pilotos y clasificaciones
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Lanzar ingesta completa
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
+          YEAR: ${{ inputs.year }}
+        run: |
+          set -euo pipefail
+
+          URL="${SITE_URL%/}/api/ingest?preset=full"
+          if [ -n "${YEAR:-}" ]; then URL="${URL}&year=${YEAR}"; fi
+
+          echo "POST ${URL}"
+          CODE=$(curl -sS -X POST "$URL" \
+            -H "Authorization: Bearer ${INGEST_SECRET}" \
+            -o response.json -w "%{http_code}" \
+            --max-time 600 --retry 2 --retry-delay 30)
+
+          echo "HTTP ${CODE}"
+          cat response.json | head -c 4000
+          echo ""
+
+          # 207 = alguna tarea falló. Se marca el workflow como fallido para
+          # que llegue la notificación: una ingesta a medias no es un éxito.
+          if [ "$CODE" != "200" ]; then
+            echo "::error::La ingesta no terminó correctamente (HTTP ${CODE})"
+            exit 1
+          fi
