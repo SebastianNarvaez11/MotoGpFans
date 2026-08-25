@@ -108,24 +108,63 @@ export function formatShortDate(
 }
 
 /**
- * Desplazamiento respecto a UTC, como lo espera un usuario: "GMT-5".
+ * Minutos de diferencia entre una zona horaria y UTC en un instante dado.
  *
- * Se calcula con `Intl` en lugar de a mano porque depende de la fecha: media
- * Europa cambia de horario dos veces al año, y una carrera de noviembre no
- * tiene el mismo desplazamiento que una de agosto.
+ * Se calcula comparando cómo se ve ese instante en la zona con el instante
+ * real, en lugar de leer el nombre que produce `Intl`: ese texto **cambia
+ * según la plataforma** —macOS devuelve "GMT" para UTC y Linux "GMT+0"— y
+ * depender de él hacía que el código funcionara en local y fallara en CI.
  */
-export function formatUtcOffset(timeZone: string, instant: Date): string {
+function utcOffsetMinutes(timeZone: string, instant: Date): number {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone,
-    timeZoneName: "longOffset",
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
   }).formatToParts(instant);
 
-  const raw = parts.find((p) => p.type === "timeZoneName")?.value ?? "GMT";
+  const value = (type: string) =>
+    Number(parts.find((p) => p.type === type)?.value ?? "0");
 
-  // "GMT+05:30" se conserva; "GMT-05:00" se abrevia a "GMT-5".
-  return raw
-    .replace(/^GMT([+-])0?(\d+):00$/, "GMT$1$2")
-    .replace(/^GMT$/, "UTC");
+  const asIfUtc = Date.UTC(
+    value("year"),
+    value("month") - 1,
+    value("day"),
+    value("hour"),
+    value("minute"),
+    value("second"),
+  );
+
+  // Se redondea al minuto: los milisegundos del instante no cuentan.
+  return Math.round((asIfUtc - instant.getTime()) / 60_000);
+}
+
+/**
+ * Desplazamiento respecto a UTC tal como lo espera un usuario: "GMT-5",
+ * "GMT+05:30", o "UTC" cuando no hay diferencia.
+ *
+ * Depende de la fecha a propósito: media Europa cambia de horario dos veces al
+ * año, así que una carrera de noviembre no tiene el mismo desplazamiento que
+ * una de agosto.
+ */
+export function formatUtcOffset(timeZone: string, instant: Date): string {
+  const minutes = utcOffsetMinutes(timeZone, instant);
+  if (minutes === 0) return "UTC";
+
+  const sign = minutes < 0 ? "-" : "+";
+  const absolute = Math.abs(minutes);
+  const hours = Math.floor(absolute / 60);
+  const rest = absolute % 60;
+
+  // Las horas enteras se abrevian ("GMT-5"); las que no, se muestran completas
+  // ("GMT+05:30"), porque ahí los minutos son información necesaria.
+  return rest === 0
+    ? `GMT${sign}${hours}`
+    : `GMT${sign}${String(hours).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
 }
 
 /**

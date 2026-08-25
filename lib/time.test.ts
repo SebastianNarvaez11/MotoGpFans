@@ -109,7 +109,46 @@ describe("formatUtcOffset", () => {
   });
 
   it("muestra UTC sin sufijo", () => {
+    // Este caso falló solo en CI: macOS devuelve "GMT" e Intl en Linux
+    // "GMT+0". Ahora el desfase se calcula numéricamente, así que el
+    // resultado no depende de la plataforma.
     expect(formatUtcOffset("UTC", ARAGON_RACE)).toBe("UTC");
+    expect(
+      formatUtcOffset("Europe/London", new Date("2026-01-15T12:00:00Z")),
+    ).toBe("UTC");
+  });
+
+  it("da el mismo resultado en cualquier plataforma", () => {
+    // Se comprueba contra el desfase calculado a mano, sin depender del
+    // texto que produzca `Intl` en el sistema donde corran los tests.
+    const casos: [string, string, number][] = [
+      ["America/Bogota", "GMT-5", -300],
+      ["Europe/Madrid", "GMT+2", 120],
+      ["Asia/Kolkata", "GMT+05:30", 330],
+      ["Asia/Tokyo", "GMT+9", 540],
+      ["Australia/Melbourne", "GMT+10", 600],
+      ["UTC", "UTC", 0],
+    ];
+
+    for (const [zona, esperado, minutos] of casos) {
+      expect(formatUtcOffset(zona, ARAGON_RACE)).toBe(esperado);
+
+      // Y el desfase declarado coincide de verdad con la hora que se muestra.
+      const local = new Intl.DateTimeFormat("en-US", {
+        timeZone: zona,
+        hourCycle: "h23",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(ARAGON_RACE);
+      const esperadaUtc = new Date(ARAGON_RACE.getTime() + minutos * 60_000);
+      const esperada = new Intl.DateTimeFormat("en-US", {
+        timeZone: "UTC",
+        hourCycle: "h23",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(esperadaUtc);
+      expect(local).toBe(esperada);
+    }
   });
 });
 
