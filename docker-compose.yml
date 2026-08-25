@@ -1,0 +1,33 @@
+# Postgres local para desarrollo.
+#
+# En producción la base de datos es Neon; esto solo replica el motor en local
+# para poder migrar, sembrar y probar la ingesta sin depender de la red.
+#
+#   docker compose up -d      → levantar
+#   docker compose down       → parar (conserva los datos en el volumen)
+#   docker compose down -v    → parar y BORRAR los datos
+#
+# Se publica en el puerto 5433 del host a propósito: el 5432 puede estar
+# ocupado por otro Postgres local.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: motogpfans-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: motogpfans
+      POSTGRES_PASSWORD: motogpfans_dev
+      POSTGRES_DB: motogpfans
+    ports:
+      - "5433:5432"
+    volumes:
+      - motogpfans_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U motogpfans -d motogpfans"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  motogpfans_pgdata:

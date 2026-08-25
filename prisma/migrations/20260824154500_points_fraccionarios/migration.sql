@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "session_results" ALTER COLUMN "points" SET DEFAULT 0,
+ALTER COLUMN "points" SET DATA TYPE DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "standing_entries" ALTER COLUMN "points" SET DATA TYPE DOUBLE PRECISION;
+

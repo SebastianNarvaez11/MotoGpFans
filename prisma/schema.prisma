@@ -1,0 +1,305 @@
+// MotoGP Fans — modelo de datos
+//
+// Principios:
+//  1. TODA marca temporal se guarda en UTC. La conversión a la hora del usuario
+//     ocurre solo al renderizar. `circuitTimeZone` se guarda como referencia.
+//  2. La fuente (api.motogp.pulselive.com) expone TRES espacios de UUID distintos
+//     para las mismas entidades: el del calendario (/v1/events), el de resultados
+//     (/v1/results/*) y el de pilotos (/v1/riders). Por eso las claves naturales
+//     (año, acrónimo, shortname) son la identidad real y los UUID de cada API se
+//     guardan como columnas puente.
+//  3. Los índices únicos sobre esos UUID son lo que hace la ingesta idempotente:
+//     reingerir actualiza, nunca duplica.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") // conexión directa: migraciones (Neon)
+}
+
+/// Temporada del campeonato. Clave natural: `year`.
+model Season {
+  id      String  @id @default(cuid())
+  year    Int     @unique
+  current Boolean @default(false)
+
+  /// UUID en /v1/events
+  broadcastUuid String? @unique @map("broadcast_uuid")
+  /// UUID en /v1/results/seasons
+  resultsUuid   String? @unique @map("results_uuid")
+
+  events    Event[]
+  standings StandingEntry[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("seasons")
+}
+
+/// Clase (MotoGP / Moto2 / Moto3). Clave natural: `acronym`.
+model Category {
+  id       String @id @default(cuid())
+  /// MGP, MT2, MT3
+  acronym  String @unique
+  name     String
+  priority Int    @default(0)
+
+  /// UUID en /v1/events
+  broadcastUuid String? @unique @map("broadcast_uuid")
+  /// UUID en /v1/results/categories
+  resultsUuid   String? @unique @map("results_uuid")
+  /// UUID en /v1/riders (current_career_step.category.id)
+  ridersUuid    String? @unique @map("riders_uuid")
+
+  sessions  Session[]
+  standings StandingEntry[]
+  riders    Rider[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("categories")
+}
+
+/// Gran Premio. Clave natural: (season, shortname) — p. ej. 2026 + "ARA".
+model Event {
+  id       String @id @default(cuid())
+  seasonId String @map("season_id")
+  season   Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+
+  /// Código de 3 letras: ARA, GBR, VAL. Estable y único dentro de la temporada.
+  shortname String
+  /// Slug para la URL: "aragon", "great-britain".
+  slug      String
+  /// Número de ronda (`sequence` en la fuente).
+  round     Int
+
+  /// Nombre crudo de la fuente, con patrocinador: "MICHELIN® GRAND PRIX OF ARAGON".
+  /// Solo para depuración: la UI usa nombres localizados por `shortname`.
+  sourceName     String  @map("source_name")
+  /// "ARAGON" — base del nombre mostrado cuando no hay traducción.
+  additionalName String? @map("additional_name")
+
+  countryIso  String  @map("country_iso")
+  circuitName String  @map("circuit_name")
+  circuitCity String? @map("circuit_city")
+
+  /// IANA normalizada ("Europe/Madrid"). La fuente la envía en mayúsculas.
+  circuitTimeZone String @map("circuit_time_zone")
+
+  /// Inicio y fin del GP, en UTC.
+  startsAt DateTime @map("starts_at") @db.Timestamptz(3)
+  endsAt   DateTime @map("ends_at") @db.Timestamptz(3)
+
+  /// NOT-STARTED | FINISHED | ...
+  status     String
+  hasResults Boolean @default(false) @map("has_results")
+
+  // Multimedia oficial (CDN photos.motogp.com)
+  backgroundUrl String? @map("background_url")
+  flagUrl       String? @map("flag_url")
+  trackSvgUrl   String? @map("track_svg_url")
+  trackPngUrl   String? @map("track_png_url")
+
+  /// UUID en /v1/events
+  broadcastUuid String  @unique @map("broadcast_uuid")
+  /// UUID en /v1/results/events — necesario para pedir sesiones y resultados
+  resultsUuid   String? @unique @map("results_uuid")
+
+  sessions Session[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([seasonId, shortname])
+  @@unique([seasonId, slug])
+  @@unique([seasonId, round])
+  @@index([seasonId, round])
+  @@index([startsAt])
+  @@map("events")
+}
+
+/// Sesión del fin de semana (FP1, Q2, SPR, RAC…) de una clase concreta.
+model Session {
+  id         String   @id @default(cuid())
+  eventId    String   @map("event_id")
+  event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  /// FP1, FP2, PR, Q1, Q2, SPR, WUP, RAC…
+  shortname String
+  name      String
+  /// PRACTICE | QUALIFYING | RACE | WARM_UP
+  kind      String
+  /// SESSION (deportiva) | MEDIA (rueda de prensa, show) — la UI solo muestra SESSION.
+  type      String
+
+  /// Inicio y fin en UTC.
+  startsAt DateTime  @map("starts_at") @db.Timestamptz(3)
+  endsAt   DateTime? @map("ends_at") @db.Timestamptz(3)
+
+  status String
+  /// Día del GP: 0 jueves, 1 viernes, 2 sábado, 3 domingo.
+  gpDay  Int?   @map("gp_day")
+
+  /// UUID en /v1/events (broadcasts)
+  broadcastUuid String  @unique @map("broadcast_uuid")
+  /// UUID en /v1/results/sessions — necesario para pedir la clasificación
+  resultsUuid   String? @unique @map("results_uuid")
+
+  results SessionResult[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([eventId, categoryId, startsAt])
+  @@index([startsAt])
+  @@map("sessions")
+}
+
+/// Piloto. Clave natural: `ridersApiUuid` (el id de /v1/riders, el que trae fotos).
+/// `resultsRiderUuid` es el id distinto que usa el API de resultados; sirve de puente
+/// (la fuente lo expone como `riders_api_uuid` en cada clasificación).
+model Rider {
+  id String @id @default(cuid())
+
+  ridersApiUuid    String  @unique @map("riders_api_uuid")
+  resultsRiderUuid String? @unique @map("results_rider_uuid")
+
+  firstName String  @map("first_name")
+  lastName  String  @map("last_name")
+  fullName  String  @map("full_name")
+  number    Int?
+  /// "JM89"
+  shortName String? @map("short_name")
+
+  countryIso  String  @map("country_iso")
+  countryName String? @map("country_name")
+  flagUrl     String? @map("flag_url")
+
+  categoryId String?   @map("category_id")
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  teamName        String? @map("team_name")
+  /// Color corporativo del equipo (#5f259f), útil como acento en la UI.
+  teamColor       String? @map("team_color")
+  teamPictureUrl  String? @map("team_picture_url")
+  constructorName String? @map("constructor_name")
+
+  // Fotos oficiales — con frecuencia null: la UI cae a iniciales.
+  profilePictureUrl String? @map("profile_picture_url")
+  portraitUrl       String? @map("portrait_url")
+  numberPictureUrl  String? @map("number_picture_url")
+  helmetUrl         String? @map("helmet_url")
+  bikeUrl           String? @map("bike_url")
+
+  /// Temporada del `current_career_step` y si está en la parrilla.
+  careerSeason Int?    @map("career_season")
+  inGrid       Boolean @default(false) @map("in_grid")
+
+  standings StandingEntry[]
+  results   SessionResult[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([categoryId, inGrid])
+  @@map("riders")
+}
+
+/// Fila del campeonato de pilotos para una temporada y clase.
+model StandingEntry {
+  id         String   @id @default(cuid())
+  seasonId   String   @map("season_id")
+  season     Season   @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  riderId    String   @map("rider_id")
+  rider      Rider    @relation(fields: [riderId], references: [id], onDelete: Cascade)
+
+  position Int
+  /// Fraccionario: MotoGP reparte medios puntos en carreras acortadas (p. ej. 197.5).
+  points   Float
+
+  /// Nombre del equipo tal cual en la clasificación (puede diferir del actual del piloto).
+  teamName        String? @map("team_name")
+  constructorName String? @map("constructor_name")
+
+  raceWins       Int @default(0) @map("race_wins")
+  podiums        Int @default(0)
+  sprintWins     Int @default(0) @map("sprint_wins")
+  sprintPodiums  Int @default(0) @map("sprint_podiums")
+  positionChange Int @default(0) @map("position_change")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([seasonId, categoryId, riderId])
+  @@index([seasonId, categoryId, position])
+  @@map("standing_entries")
+}
+
+/// Resultado de un piloto en una sesión ya corrida.
+model SessionResult {
+  id        String  @id @default(cuid())
+  sessionId String  @map("session_id")
+  session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  riderId   String  @map("rider_id")
+  rider     Rider   @relation(fields: [riderId], references: [id], onDelete: Cascade)
+
+  /// Null si no clasificó (abandono).
+  position Int?
+  /// Fraccionario en carreras acortadas — ver StandingEntry.points.
+  points   Float @default(0)
+
+  teamName        String? @map("team_name")
+  constructorName String? @map("constructor_name")
+
+  /// Tiempo total del ganador ("39:45.930"); para el resto, su tiempo.
+  time         String?
+  /// Diferencia con el primero ("+2.538").
+  gapToFirst   String? @map("gap_to_first")
+  totalLaps    Int?    @map("total_laps")
+  averageSpeed Float?  @map("average_speed")
+  /// INSTND (in standing), OUTSTND, RETIRED…
+  status       String?
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([sessionId, riderId])
+  @@index([sessionId, position])
+  @@map("session_results")
+}
+
+enum IngestStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+/// Bitácora de cada ejecución de la ingesta: alimenta /api/health y el aviso
+/// de "actualizado hace X" cuando la fuente lleva tiempo sin responder.
+model IngestRun {
+  id   String @id @default(cuid())
+  /// calendar | riders | standings | results
+  task String
+
+  status          IngestStatus @default(RUNNING)
+  startedAt       DateTime     @default(now()) @map("started_at") @db.Timestamptz(3)
+  finishedAt      DateTime?    @map("finished_at") @db.Timestamptz(3)
+  durationMs      Int?         @map("duration_ms")
+  recordsRead     Int          @default(0) @map("records_read")
+  recordsUpserted Int          @default(0) @map("records_upserted")
+  error           String?
+
+  @@index([task, startedAt])
+  @@index([status, startedAt])
+  @@map("ingest_runs")
+}
