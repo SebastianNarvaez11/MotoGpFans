@@ -41,3 +41,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Bundle de diseño de Claude Design: referencia local, no código del proyecto
+artboards-de-dise-o-motorsport/
+*-handoff.zip
