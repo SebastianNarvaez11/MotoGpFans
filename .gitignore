@@ -30,8 +30,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — los secretos nunca se versionan...
 .env*
+# ...pero la plantilla documentada sí: es lo que permite montar el proyecto.
+!.env.example
 
 # vercel
 .vercel

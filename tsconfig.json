@@ -13,6 +13,13 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    // Rigor extra: obliga a comprobar accesos por índice y a marcar
+    // explícitamente los overrides y las variables sin usar.
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
     "plugins": [
       {
         "name": "next"

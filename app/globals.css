@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Design tokens del handoff de Claude Design ─────────────────────────
+   Fuente: artboards-de-dise-o-motorsport/project/MotoGP Fans.dc.html      */
+@theme {
+  /* Superficies */
+  --color-ink: #08080b;
+  --color-ink-soft: #0a0a0f;
+  --color-ink-raised: #101016;
+  --color-paper: #f4f4f6;
+
+  /* Rojos MotoGP */
+  --color-race: #e0182e; /* CTA / botones */
+  --color-race-hot: #ff2033; /* puntos y horas destacadas */
+  --color-race-label: #ff3b4e; /* labels y kickers */
+  --color-race-soft: #ff8791; /* links hover */
+
+  /* Estados */
+  --color-checkered: #7ee08a; /* sesión / ronda ya corrida */
+
+  /* Tipografía */
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+
+  /* Radios */
+  --radius-card: 24px;
+  --radius-panel: 20px;
+  --radius-tile: 16px;
+
+  /* Animación del badge EN VIVO */
+  --animate-livepulse: livepulse 1.4s infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes livepulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 32, 51, 0.6);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 6px rgba(255, 32, 51, 0);
   }
 }
 
+/* ── Utilidades de vidrio (glassmorphism) ───────────────────────────── */
+
+/* Panel de vidrio estándar: cards de horarios, posiciones, etc. */
+@utility glass {
+  background: rgba(15, 16, 22, 0.55);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Vidrio sutil: chips, píldoras del header, filas atenuadas */
+@utility glass-chip {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* Vidrio del navbar flotante */
+@utility glass-nav {
+  background: rgba(15, 16, 22, 0.6);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Vidrio destacado en rojo: próxima ronda, líder del campeonato */
+@utility glass-hot {
+  background: rgba(26, 12, 16, 0.6);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 70, 90, 0.4);
+}
+
+/* Bottom sheet (selector de ubicación) */
+@utility glass-sheet {
+  background: rgba(15, 16, 22, 0.72);
+  backdrop-filter: blur(34px);
+  -webkit-backdrop-filter: blur(34px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Números gigantes en outline (ronda del GP, dorsal del líder) */
+@utility numeral-ghost {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 70, 90, 0.55);
+  font-style: italic;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Cifras alineadas: horas y puntos */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+html {
+  color-scheme: dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
 }

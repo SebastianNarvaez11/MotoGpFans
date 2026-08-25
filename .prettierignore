@@ -1,0 +1,8 @@
+.next
+node_modules
+out
+build
+package-lock.json
+artboards-de-dise-o-motorsport
+prisma/migrations
+*.min.*
