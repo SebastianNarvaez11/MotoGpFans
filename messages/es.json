@@ -1,0 +1,118 @@
+{
+  "brand": {
+    "name": "MotoGP",
+    "suffix": "FANS"
+  },
+  "nav": {
+    "home": "Inicio",
+    "calendar": "Calendario",
+    "standings": "Posiciones"
+  },
+  "home": {
+    "nextGp": "Próximo GP",
+    "round": "Ronda {round} de {total}",
+    "schedule": "Horarios del finde",
+    "seeGpDetail": "Ver detalle del GP",
+    "seeSchedule": "Ver horarios en tu hora",
+    "standingsTitle": "Posiciones · {category}",
+    "seeFullStandings": "Ver posiciones completas",
+    "recentResults": "Resultados recientes",
+    "seeAllResults": "Ver todos los resultados",
+    "wonBy": "Ganó {rider}",
+    "seasonOver": "Temporada finalizada",
+    "noUpcoming": "No hay más carreras esta temporada",
+    "metaDescription": "Consulta los horarios del próximo Gran Premio de MotoGP en tu hora local, con el calendario completo y la clasificación del campeonato."
+  },
+  "calendar": {
+    "title": "Calendario",
+    "season": "Temporada {year}",
+    "progress": "{done} de {total} rondas corridas",
+    "nextRound": "Próxima ronda",
+    "seeSchedule": "Ver horarios",
+    "race": "Carrera",
+    "seasonFinale": "Final de temporada",
+    "done": "Corrida",
+    "metaDescription": "Calendario completo de la temporada de MotoGP con las fechas de los 22 Grandes Premios y sus horarios en tu hora local."
+  },
+  "gp": {
+    "roundOf": "Ronda {round} de {total}",
+    "back": "Volver",
+    "results": "Resultados",
+    "schedule": "Horarios",
+    "legend": "Sesión corrida ✓ · EN VIVO · Por venir — todas en tu hora local",
+    "noSessions": "Sin sesiones publicadas para esta clase todavía",
+    "podium": "Podio",
+    "metaDescription": "Horarios de todas las sesiones del {gp} en tu hora local: entrenamientos, clasificación, sprint y carrera."
+  },
+  "standings": {
+    "title": "Posiciones",
+    "subtitle": "Campeonato de pilotos · tras {rounds} rondas",
+    "points": "PTS",
+    "noPhotoNote": "Piloto sin foto oficial → iniciales",
+    "empty": "Aún no hay posiciones para esta clase",
+    "metaDescription": "Clasificación del campeonato de pilotos de MotoGP, Moto2 y Moto3, actualizada tras cada carrera."
+  },
+  "session": {
+    "live": "EN VIVO",
+    "fp1": "FP1",
+    "fp2": "FP2",
+    "practice": "Práctica",
+    "q1": "Q1",
+    "q2": "Q2",
+    "sprint": "SPRINT",
+    "warmup": "Warm Up",
+    "race": "CARRERA"
+  },
+  "days": {
+    "mon": "LUN",
+    "tue": "MAR",
+    "wed": "MIÉ",
+    "thu": "JUE",
+    "fri": "VIE",
+    "sat": "SÁB",
+    "sun": "DOM"
+  },
+  "timezone": {
+    "chip": "{city} · {offset}",
+    "title": "Tu zona horaria",
+    "description": "Todos los horarios se muestran en esta hora. Se recuerda tu elección.",
+    "detected": "Detectada automáticamente",
+    "search": "Buscar país o ciudad…",
+    "use": "Usar esta zona",
+    "frequent": "Zonas frecuentes",
+    "noResults": "Sin resultados"
+  },
+  "common": {
+    "updatedAt": "Actualizado {time}",
+    "loading": "Cargando…",
+    "error": "No pudimos cargar la información"
+  },
+  "gpNames": {
+    "THA": "Tailandia",
+    "BRA": "Brasil",
+    "USA": "las Américas",
+    "SPA": "España",
+    "FRA": "Francia",
+    "CAT": "Cataluña",
+    "ITA": "Italia",
+    "HUN": "Hungría",
+    "CZE": "Chequia",
+    "NED": "Países Bajos",
+    "GER": "Alemania",
+    "GBR": "Gran Bretaña",
+    "ARA": "Aragón",
+    "RSM": "San Marino",
+    "AUT": "Austria",
+    "JPN": "Japón",
+    "INA": "Indonesia",
+    "AUS": "Australia",
+    "MAL": "Malasia",
+    "QAT": "Catar",
+    "POR": "Portugal",
+    "VAL": "Valencia"
+  },
+  "footer": {
+    "disclaimer": "Proyecto de aficionados sin relación oficial con Dorna Sports, MotoGP™ ni sus equipos. Todas las marcas, nombres e imágenes pertenecen a sus respectivos propietarios. Sitio sin ánimo de lucro y sin publicidad.",
+    "source": "Datos y multimedia: motogp.com"
+  }
+}
