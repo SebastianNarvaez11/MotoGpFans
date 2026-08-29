@@ -15,7 +15,9 @@ import {
   getRecentRaceWinners,
   getSeasonEvents,
   getStandings,
+  isCategoryFilter,
 } from "@/lib/data/cached";
+import { CategoryTabs } from "@/components/CategoryTabs";
 import { toSessionRows } from "@/lib/data/view";
 import { formatPoints, formatShortDate } from "@/lib/time";
 import { buildMetadata } from "@/lib/seo";
@@ -51,11 +53,16 @@ export async function generateMetadata({
 
 export default async function HomePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ clase?: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const { clase } = await searchParams;
+  const filter = clase && isCategoryFilter(clase) ? clase : "MGP";
 
   const t = await getTranslations("home");
   const tGp = await getTranslations("gpNames");
@@ -72,8 +79,12 @@ export default async function HomePage({
     getRecentRaceWinners(season.id, "MGP", 3),
   ]);
 
-  const sessions = nextEvent ? await getEventSessions(nextEvent.id, "MGP") : [];
-  const rows = toSessionRows(sessions, now);
+  const sessions = nextEvent
+    ? await getEventSessions(nextEvent.id, filter)
+    : [];
+  const rows = toSessionRows(sessions, now, {
+    showCategory: filter === "ALL",
+  });
   const top = standings.slice(0, 3);
 
   return (
@@ -117,6 +128,13 @@ export default async function HomePage({
             timeZone={timeZone}
             locale={locale}
             title={t("schedule")}
+            tabs={
+              <CategoryTabs
+                active={filter}
+                hrefFor={(c) => (c === "MGP" ? "/" : `/?clase=${c}`)}
+                size="sm"
+              />
+            }
           >
             <Link
               href={`/gp/${nextEvent.slug}`}

@@ -7,6 +7,7 @@ type DbSession = {
   name: string;
   startsAt: Date;
   endsAt: Date | null;
+  category?: { acronym: string };
 };
 
 /**
@@ -19,11 +20,17 @@ type DbSession = {
 export function toSessionRows(
   sessions: readonly DbSession[],
   now: Date,
+  { showCategory = false }: { showCategory?: boolean } = {},
 ): SessionForRow[] {
   return sessions.map((session) => ({
     shortname: session.shortname,
     name: session.name,
     startsAt: session.startsAt,
     state: sessionState(session.startsAt, session.endsAt, now),
+    // La clase solo se etiqueta al mostrar varias juntas: en una lista
+    // filtrada por una sola clase, repetirla en cada fila sería ruido.
+    ...(showCategory && session.category
+      ? { categoryAcronym: session.category.acronym }
+      : {}),
   }));
 }

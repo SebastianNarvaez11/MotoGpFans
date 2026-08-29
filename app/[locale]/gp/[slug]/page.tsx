@@ -15,7 +15,7 @@ import {
   getEventSessions,
   getSeasonEvents,
   getSessionResults,
-  isCategoryAcronym,
+  isCategoryFilter,
 } from "@/lib/data/cached";
 import { toSessionRows } from "@/lib/data/view";
 import { formatPoints } from "@/lib/time";
@@ -60,7 +60,7 @@ export default async function EventPage({
   setRequestLocale(locale);
 
   const { clase } = await searchParams;
-  const category = clase && isCategoryAcronym(clase) ? clase : "MGP";
+  const filter = clase && isCategoryFilter(clase) ? clase : "MGP";
 
   const t = await getTranslations("gp");
   const tGpNames = await getTranslations("gpNames");
@@ -74,14 +74,17 @@ export default async function EventPage({
   if (!event) notFound();
 
   const [sessions, events] = await Promise.all([
-    getEventSessions(event.id, category),
+    getEventSessions(event.id, filter),
     getSeasonEvents(season.id),
   ]);
 
-  const rows = toSessionRows(sessions, now);
+  const rows = toSessionRows(sessions, now, {
+    showCategory: filter === "ALL",
+  });
 
   // Si el GP ya se corrió, se muestra el podio de la carrera bajo los horarios.
-  const race = sessions.find((s) => s.shortname === "RAC");
+  const race =
+    filter === "ALL" ? undefined : sessions.find((s) => s.shortname === "RAC");
   const podium =
     race && race._count.results > 0 ? await getSessionResults(race.id, 3) : [];
 
@@ -128,7 +131,7 @@ export default async function EventPage({
       />
 
       <CategoryTabs
-        active={category}
+        active={filter}
         hrefFor={(c) =>
           c === "MGP" ? `/gp/${slug}` : `/gp/${slug}?clase=${c}`
         }

@@ -42,7 +42,9 @@
     "legend": "Completed ✓ · LIVE · Upcoming — all in your local time",
     "noSessions": "No sessions published for this class yet",
     "podium": "Podium",
-    "metaDescription": "All session times for the {gp} in your local timezone: practice, qualifying, sprint and race."
+    "metaDescription": "All session times for the {gp} in your local timezone: practice, qualifying, sprint and race.",
+    "allClasses": "All",
+    "classFilter": "Filter by class"
   },
   "standings": {
     "title": "Standings",

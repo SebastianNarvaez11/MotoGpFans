@@ -122,10 +122,16 @@ export function LocationSheet({
     };
   }, [isOpen]);
 
+  /**
+   * Es el control más importante del sitio: define en qué hora se leen todos
+   * los horarios. Por eso lleva icono, borde rojo y algo de brillo — un chip
+   * gris del montón no invita a tocarlo, y quien no lo descubre ve las horas
+   * en una zona que no es la suya.
+   */
   const chipClass =
     variant === "accent"
-      ? "inline-flex items-center gap-[6px] rounded-full border border-[rgba(255,70,90,.35)] bg-[rgba(224,24,46,.16)] px-[11px] py-[5px] text-[11px] font-bold text-race-soft transition-colors hover:bg-[rgba(224,24,46,.26)]"
-      : "glass-chip inline-flex items-center gap-[6px] rounded-full px-[11px] py-[6px] text-xs font-bold transition-colors hover:bg-white/[.14]";
+      ? "inline-flex items-center gap-[6px] rounded-full border border-[rgba(255,70,90,.55)] bg-[rgba(224,24,46,.22)] px-[13px] py-[7px] text-[12px] font-extrabold text-race-soft shadow-[0_0_18px_rgba(224,24,46,.25)] transition-colors hover:bg-[rgba(224,24,46,.34)]"
+      : "inline-flex items-center gap-[7px] rounded-full border border-[rgba(255,70,90,.5)] bg-[rgba(224,24,46,.18)] px-[14px] py-[9px] text-[13px] font-extrabold text-paper shadow-[0_0_20px_rgba(224,24,46,.28)] backdrop-blur-[18px] transition-colors hover:bg-[rgba(224,24,46,.3)]";
 
   return (
     <>
@@ -137,7 +143,9 @@ export function LocationSheet({
         aria-expanded={isOpen}
         className={chipClass}
       >
+        <GlobeIcon />
         {timeZoneCityName(current)} · {formatUtcOffset(current, reference)}
+        <ChevronIcon />
       </button>
 
       {isOpen ? (
@@ -263,6 +271,59 @@ export function LocationSheet({
         </div>
       ) : null}
     </>
+  );
+}
+
+/** Globo: señala de un vistazo que el chip va de ubicación y hora. */
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] shrink-0" aria-hidden>
+      <circle
+        cx="12"
+        cy="12"
+        r="8.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="4"
+        ry="8.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <line
+        x1="3.5"
+        y1="12"
+        x2="20.5"
+        y2="12"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+/** Punta de flecha: indica que el chip abre algo. */
+function ChevronIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-3 w-3 shrink-0 opacity-70"
+      aria-hidden
+    >
+      <path
+        d="M7 10 L12 15 L17 10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 

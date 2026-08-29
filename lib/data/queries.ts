@@ -17,6 +17,19 @@ export function isCategoryAcronym(value: string): value is CategoryAcronym {
   return (CATEGORY_ORDER as readonly string[]).includes(value);
 }
 
+/**
+ * Filtro de clase para los horarios, con una opción extra: "todas".
+ *
+ * Existe porque un domingo de MotoGP son tres carreras seguidas —Moto3, Moto2
+ * y MotoGP— y filtrando por una sola clase el aficionado no ve el día completo.
+ */
+export const ALL_CATEGORIES = "ALL" as const;
+export type CategoryFilter = CategoryAcronym | typeof ALL_CATEGORIES;
+
+export function isCategoryFilter(value: string): value is CategoryFilter {
+  return value === ALL_CATEGORIES || isCategoryAcronym(value);
+}
+
 const eventSummary = {
   id: true,
   shortname: true,
@@ -90,13 +103,16 @@ export async function getEventBySlug(seasonId: string, slug: string) {
  */
 export async function getEventSessions(
   eventId: string,
-  categoryAcronym: CategoryAcronym,
+  filter: CategoryFilter,
 ) {
   return prisma.session.findMany({
     where: {
       eventId,
       type: "SESSION",
-      category: { acronym: categoryAcronym },
+      category:
+        filter === ALL_CATEGORIES
+          ? { acronym: { in: [...CATEGORY_ORDER] } }
+          : { acronym: filter },
     },
     orderBy: { startsAt: "asc" },
     select: {
@@ -107,6 +123,8 @@ export async function getEventSessions(
       startsAt: true,
       endsAt: true,
       status: true,
+      // Se necesita para etiquetar cada fila cuando se muestran todas juntas.
+      category: { select: { acronym: true } },
       _count: { select: { results: true } },
     },
   });

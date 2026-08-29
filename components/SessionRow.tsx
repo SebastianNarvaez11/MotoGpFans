@@ -9,6 +9,14 @@ export type SessionForRow = {
   name: string;
   startsAt: Date;
   state: SessionState;
+  /** Clase a la que pertenece. Solo se muestra al listar varias juntas. */
+  categoryAcronym?: string;
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  MGP: "MotoGP",
+  MT2: "Moto2",
+  MT3: "Moto3",
 };
 
 /**
@@ -68,6 +76,9 @@ export function SessionRow({
           }`}
         />
         {label}
+        {session.categoryAcronym ? (
+          <CategoryBadge acronym={session.categoryAcronym} />
+        ) : null}
         {session.state === "live" ? <LiveBadge label={t("live")} /> : null}
       </span>
 
@@ -78,6 +89,20 @@ export function SessionRow({
         {formatTime(session.startsAt, timeZone, locale)}
       </time>
     </div>
+  );
+}
+
+/**
+ * Distintivo de clase.
+ *
+ * Solo aparece cuando se listan varias clases juntas: en una lista filtrada
+ * sería ruido, porque todas las filas dirían lo mismo.
+ */
+function CategoryBadge({ acronym }: { acronym: string }) {
+  return (
+    <span className="rounded-full border border-white/[.14] bg-white/[.08] px-[7px] py-[2px] text-[10px] font-bold tracking-[.06em] text-white/60">
+      {CATEGORY_LABELS[acronym] ?? acronym}
+    </span>
   );
 }
 

@@ -42,7 +42,9 @@
     "legend": "Sesión corrida ✓ · EN VIVO · Por venir — todas en tu hora local",
     "noSessions": "Sin sesiones publicadas para esta clase todavía",
     "podium": "Podio",
-    "metaDescription": "Horarios de todas las sesiones del {gp} en tu hora local: entrenamientos, clasificación, sprint y carrera."
+    "metaDescription": "Horarios de todas las sesiones del {gp} en tu hora local: entrenamientos, clasificación, sprint y carrera.",
+    "allClasses": "Todas",
+    "classFilter": "Filtrar por clase"
   },
   "standings": {
     "title": "Posiciones",

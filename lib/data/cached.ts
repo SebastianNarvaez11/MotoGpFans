@@ -1,6 +1,6 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
-import type { CategoryAcronym } from "./queries";
+import type { CategoryAcronym, CategoryFilter } from "./queries";
 import * as queries from "./queries";
 import { reviveDates } from "./revive";
 
@@ -64,8 +64,8 @@ export const getEventBySlug = cached(
 );
 
 export const getEventSessions = cached(
-  (eventId: string, category: CategoryAcronym) =>
-    queries.getEventSessions(eventId, category),
+  (eventId: string, filter: CategoryFilter) =>
+    queries.getEventSessions(eventId, filter),
   ["event-sessions"],
 );
 
@@ -97,4 +97,10 @@ export async function getNextEvent(seasonId: string, now = new Date()) {
   return events.find((event) => event.endsAt >= now) ?? null;
 }
 
-export { CATEGORY_ORDER, isCategoryAcronym } from "./queries";
+export {
+  ALL_CATEGORIES,
+  CATEGORY_ORDER,
+  isCategoryAcronym,
+  isCategoryFilter,
+} from "./queries";
+export type { CategoryFilter } from "./queries";

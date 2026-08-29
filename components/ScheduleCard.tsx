@@ -19,6 +19,7 @@ export function ScheduleCard({
   title,
   showTimeZone = true,
   size = "md",
+  tabs,
   children,
 }: {
   sessions: readonly SessionForRow[];
@@ -27,6 +28,8 @@ export function ScheduleCard({
   title: string;
   showTimeZone?: boolean;
   size?: "sm" | "md";
+  /** Selector de clase, cuando la tarjeta permite cambiar de categoría. */
+  tabs?: React.ReactNode;
   children?: React.ReactNode;
 }) {
   const t = useTranslations("gp");
@@ -46,6 +49,8 @@ export function ScheduleCard({
           />
         ) : null}
       </div>
+
+      {tabs}
 
       {days.length === 0 ? (
         <p className="text-[13px] text-white/50">{t("noSessions")}</p>
